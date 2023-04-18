@@ -1,36 +1,25 @@
 const request = require('request');
 
-// console.log(request)
+const fetchBreedDescription = function(breedName, callback) {
 
-// Slice process.argv to only return the users input
-const getUserChoice = process.argv.slice(2);
+  const url = `https://api.thecatapi.com/v1/breeds/search?q=${breedName}`;
 
-// Cat breed entered:
-const userQuery = getUserChoice[0];
+  request(url, (error, response, body) => {
+    try {
+      const data = JSON.parse(body);
 
-// API Endpoint:
-const url = `https://api.thecatapi.com/v1/breeds/search?q=${userQuery}`;
+      callback(null, data[0].description);
 
-request(url, (error, response, body) => {
-  // console.log(typeof body)
-  // const data = JSON.parse(body);
-  // console.log(data);
-  // console.log(typeof data);
+    } catch (error) {
 
-  try {
-    const data = JSON.parse(body);
+      if (data.length === 0 || error.type === undefined) {
+        callback(`Error occurred, could not find ${breedName}. Error: ${error}`, null);
+      }
 
-    // Return the cat breed description
-    return console.log(data[0].description);
+    } // catch error
 
-  } catch (error) {
+  }); // request
 
-    if (error.type === undefined) {
-      // Return error message if cat breed not found
-      console.log("type of error:", error.type);
-      console.log("Could not find that cat breed. Please try again");
-    }
+}; // fetchBreedDescription
 
-  }
-
-})
+module.exports = fetchBreedDescription;
