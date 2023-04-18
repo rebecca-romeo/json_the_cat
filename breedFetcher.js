@@ -12,8 +12,8 @@ const fetchBreedDescription = function(breedName, callback) {
 
     } catch (error) {
 
-      if (data.length === 0 || error.type === undefined) {
-        callback(`Error occurred, could not find ${breedName}. Error: ${error}`, null);
+      if (error.type === undefined) {
+        callback(`Invalid breed`);
       }
 
     } // catch error
