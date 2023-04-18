@@ -19,7 +19,6 @@ request(url, (error, response, body) => {
 
   try {
     const data = JSON.parse(body);
-    // console.log("json data", data);
 
     // Return the cat breed description
     return console.log(data[0].description);
@@ -34,6 +33,4 @@ request(url, (error, response, body) => {
 
   }
 
-
-
-});
+})
